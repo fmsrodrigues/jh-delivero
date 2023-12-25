@@ -1,0 +1,46 @@
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.access_token}}
+@orderId = 5df2f69b-064c-4029-91b2-fec18e6d1f7b
+
+###
+
+# @name create_account
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+  "name": "John Doe Req",
+  "email": "johndoereq@example.com",
+  "password": "123456"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "123456"
+}
+
+###
+
+# @name update_order_status
+PUT {{baseUrl}}/orders/{{orderId}}/status
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "status": "shipped"
+}
+
+###
+
+# @name list_all_orders
+GET {{baseUrl}}/orders?page=1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
